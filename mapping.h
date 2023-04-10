@@ -50,7 +50,7 @@ namespace sdds {
     class Route
     {
         Point points[MAX_ROUTE];
-        int num_points = 0;
+        int num_points;
 
     public:
         Route();

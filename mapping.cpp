@@ -73,7 +73,7 @@ namespace sdds {
         return squares[tmp_point.getRow()][tmp_point.getCol()] == 0;
     }
 
-    Route::Route() {}
+    Route::Route() : num_points(0) {}
 
     int Route::getNumPoints() const { return num_points; }
 
@@ -169,17 +169,17 @@ namespace sdds {
         cells[i][j].parent_i = i;
         cells[i][j].parent_j = j;
 
-        std::vector<std::pair<double, std::pair<int, int>>> openList;
-        openList.emplace_back(0.0, std::make_pair(i, j));
+        std::vector<std::pair<double, Point> > openList;
+        openList.emplace_back(0.0, Point(i, j));
 
         bool destinationFound = false;
 
         while (!openList.empty()) {
-            std::pair<double, std::pair<int, int>> p = openList[0];
+            std::pair<double, Point> p = openList[0];
             openList.erase(openList.begin());
 
-            i = p.second.first;
-            j = p.second.second;
+            i = p.second.getRow();
+            j = p.second.getCol();
             closedList[i][j] = true;
 
             double gNew, hNew, fNew;
@@ -204,7 +204,7 @@ namespace sdds {
                             hNew = heuristics(Point(iNew, jNew), end);
                             fNew = gNew + hNew;
                             if (cells[iNew][jNew].f == FLT_MAX || cells[iNew][jNew].f > fNew) {
-                                openList.emplace_back(fNew, std::make_pair(iNew, jNew));
+                                openList.emplace_back(fNew, Point(iNew, jNew));
                                 cells[iNew][jNew].f = fNew;
                                 cells[iNew][jNew].g = gNew;
                                 cells[iNew][jNew].h = hNew;
