@@ -11,7 +11,14 @@ namespace sdds {
 
     bool Point::isValid() const { return row >= 0 && col >= 0 && row < MAP_ROWS && col < MAP_COLS; }
 
-    Map::Map() { populateMap(); }
+    Map::Map()
+    {
+        for (int i = 0; i < MAP_ROWS; i++) {
+            for (int j = 0; j < MAP_COLS; j++) {
+                squares[i][j] = 0;
+            }
+        }
+    }
 
     void Map::populateMap()
     {
